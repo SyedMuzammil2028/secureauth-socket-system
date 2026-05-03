@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: secureauth-api
+    name: secureauth-api-v2
     runtime: python
     plan: free
     branch: main
@@ -60,11 +60,12 @@ services:
       - key: NODE_VERSION
         value: 22.13.0
       - key: VITE_API_BASE_URL
-        value: https://secureauth-api.onrender.com
+        value: https://secureauth-api-v2.onrender.com
     routes:
       - type: rewrite
         source: /*
         destination: /index.html
+
 
 
 

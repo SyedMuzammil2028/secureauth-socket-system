@@ -1,5 +1,5 @@
 const LOCAL_API_BASE_URL = "http://127.0.0.1:8000";
-const RENDER_API_BASE_URL = "https://secureauth-api.onrender.com";
+const RENDER_API_BASE_URL = "https://secureauth-api-v2.onrender.com";
 
 function getApiBaseUrl() {
   const configuredUrl = import.meta.env.VITE_API_BASE_URL;
@@ -92,3 +92,4 @@ export async function apiRequest<T>(
 
   return data as T;
 }
+
