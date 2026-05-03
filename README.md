@@ -40,8 +40,8 @@ git --version
 Clone the repository:
 
 ```powershell
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
-cd YOUR_REPOSITORY_NAME
+git clone https://github.com/SyedMuzammil2028/secureauth-socket-system.git
+cd secureauth-socket-system
 ```
 
 Or download it manually:
@@ -311,3 +311,4 @@ If database errors occur:
 
 - Delete the local `backend/database/auth_system.db` file.
 - Run the database setup commands again.
+
