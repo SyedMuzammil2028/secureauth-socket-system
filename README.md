@@ -411,7 +411,8 @@ Use these settings:
 
 ```text
 Branch: main
-Root Directory: frontend`r`nBuild Command: npm install --include=optional && npm run build
+Root Directory: frontend
+Build Command: npm install --include=optional && npm install --no-save @rollup/rollup-linux-x64-gnu@4.60.2 && npm run build
 Publish Directory: dist
 ```
 
@@ -435,6 +436,8 @@ Action: Rewrite
 - This project uses SQLite for the course demo. On Render, SQLite data may reset after redeploys/restarts unless you attach persistent storage or migrate to a managed database.
 - The standalone TCP socket server is not exposed as a public Render TCP service. The deployed frontend uses FastAPI routes, and those routes call the socket authentication logic internally.
 - Never put real SMTP passwords in GitHub. Add them only in Render environment variables.
+
+
 
 
 
