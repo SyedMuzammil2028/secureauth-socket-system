@@ -51,7 +51,7 @@
     name: secureauth-frontend
     runtime: static
     branch: main
-    buildCommand: cd frontend && npm ci && npm run build
+    buildCommand: cd frontend && npm install --include=optional && npm run build
     staticPublishPath: frontend/dist
     envVars:
       - key: NODE_VERSION
@@ -62,3 +62,4 @@
       - type: rewrite
         source: /*
         destination: /index.html
+

@@ -411,7 +411,7 @@ Use these settings:
 
 ```text
 Branch: main
-Build Command: cd frontend && npm ci && npm run build
+Build Command: cd frontend && npm install --include=optional && npm run build
 Publish Directory: frontend/dist
 ```
 
@@ -435,4 +435,5 @@ Action: Rewrite
 - This project uses SQLite for the course demo. On Render, SQLite data may reset after redeploys/restarts unless you attach persistent storage or migrate to a managed database.
 - The standalone TCP socket server is not exposed as a public Render TCP service. The deployed frontend uses FastAPI routes, and those routes call the socket authentication logic internally.
 - Never put real SMTP passwords in GitHub. Add them only in Render environment variables.
+
 
