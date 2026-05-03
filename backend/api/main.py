@@ -31,6 +31,7 @@ app = FastAPI(title="Secure Auth System API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=get_allowed_origins(),
+    allow_origin_regex=r"https://.*\.onrender\.com",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -45,3 +46,8 @@ app.include_router(client_router, prefix="/api/client", tags=["Client"])
 @app.get("/")
 def root():
     return {"message": "Secure Auth System API is running."}
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+

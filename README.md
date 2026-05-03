@@ -1,4 +1,4 @@
-﻿# SecureAuth - Secure Network-Based User Authentication System
+# SecureAuth - Secure Network-Based User Authentication System
 
 SecureAuth is a Computer Networks project that demonstrates secure user authentication using Python socket programming, FastAPI, SQLite, and a React + TypeScript frontend.
 
@@ -441,3 +441,9 @@ Action: Rewrite
 
 
 
+
+Backend health check URL:
+
+```text
+https://secureauth-api.onrender.com/health
+```
