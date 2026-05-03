@@ -311,4 +311,128 @@ If database errors occur:
 
 - Delete the local `backend/database/auth_system.db` file.
 - Run the database setup commands again.
+## Deploy On Render
+
+This repository includes `render.yaml`, so you can deploy both services from the Render Dashboard using a Blueprint.
+
+### Recommended Render Architecture
+
+```text
+secureauth-api       Render Web Service, Python/FastAPI
+secureauth-frontend  Render Static Site, React/Vite
+```
+
+The frontend talks to the backend through `VITE_API_BASE_URL`.
+
+### Option 1: Deploy With render.yaml Blueprint
+
+1. Push this repository to GitHub.
+2. Open Render Dashboard.
+3. Click `New`.
+4. Select `Blueprint`.
+5. Connect this GitHub repository.
+6. Select the `main` branch.
+7. Render will detect `render.yaml`.
+8. Before deploying, add required secret values when Render asks for them:
+
+```text
+SMTP_EMAIL=your_email@gmail.com
+SMTP_PASSWORD=your_gmail_app_password
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=YourStrongPassword@123
+```
+
+The blueprint creates:
+
+```text
+Backend URL:  https://secureauth-api.onrender.com
+Frontend URL: https://secureauth-frontend.onrender.com
+```
+
+If Render gives different URLs, update these environment variables in Render:
+
+Backend service:
+
+```text
+CORS_ORIGINS=https://your-frontend-url.onrender.com
+```
+
+Frontend static site:
+
+```text
+VITE_API_BASE_URL=https://your-backend-url.onrender.com
+```
+
+Then redeploy both services.
+
+### Option 2: Manual Render Setup
+
+#### Backend Web Service
+
+Create a new Render `Web Service`.
+
+Use these settings:
+
+```text
+Runtime: Python 3
+Branch: main
+Build Command: pip install -r requirements.txt
+Start Command: python -m backend.database.init_db && python -m backend.database.migrate_security_controls && python -m backend.database.create_admin && uvicorn backend.api.main:app --host 0.0.0.0 --port $PORT
+```
+
+Add environment variables:
+
+```text
+APP_ENV=production
+DB_PATH=backend/database/auth_system.db
+CORS_ORIGINS=https://your-frontend-url.onrender.com
+SECRET_KEY=your_long_random_secret
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_EMAIL=your_email@gmail.com
+SMTP_PASSWORD=your_gmail_app_password
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=YourStrongPassword@123
+EMAIL_OTP_EXPIRY_MINUTES=5
+MFA_TEMP_EXPIRY_MINUTES=5
+NONCE_EXPIRY_MINUTES=2
+SESSION_EXPIRY_HOURS=12
+MAX_FAILED_ATTEMPTS=5
+LOCKOUT_MINUTES=10
+RATE_LIMIT_WINDOW_SECONDS=60
+RATE_LIMIT_MAX_REQUESTS=10
+```
+
+#### Frontend Static Site
+
+Create a new Render `Static Site`.
+
+Use these settings:
+
+```text
+Branch: main
+Build Command: cd frontend && npm ci && npm run build
+Publish Directory: frontend/dist
+```
+
+Add environment variable:
+
+```text
+VITE_API_BASE_URL=https://your-backend-url.onrender.com
+```
+
+For React Router routes, add this rewrite rule in Render Static Site settings:
+
+```text
+Source: /*
+Destination: /index.html
+Action: Rewrite
+```
+
+### Render Notes
+
+- Render's free web services can sleep when inactive, so the first request after inactivity can be slow.
+- This project uses SQLite for the course demo. On Render, SQLite data may reset after redeploys/restarts unless you attach persistent storage or migrate to a managed database.
+- The standalone TCP socket server is not exposed as a public Render TCP service. The deployed frontend uses FastAPI routes, and those routes call the socket authentication logic internally.
+- Never put real SMTP passwords in GitHub. Add them only in Render environment variables.
 

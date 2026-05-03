@@ -1,3 +1,5 @@
+﻿import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -6,14 +8,28 @@ from backend.api.routes.user_routes import router as user_router
 from backend.api.routes.admin_routes import router as admin_router
 from backend.api.routes.client_routes import router as client_router
 
+
+def get_allowed_origins() -> list[str]:
+    default_origins = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ]
+
+    configured = os.getenv("CORS_ORIGINS", "")
+    configured_origins = [
+        origin.strip().rstrip("/")
+        for origin in configured.split(",")
+        if origin.strip()
+    ]
+
+    return [*default_origins, *configured_origins]
+
+
 app = FastAPI(title="Secure Auth System API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ],
+    allow_origins=get_allowed_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
