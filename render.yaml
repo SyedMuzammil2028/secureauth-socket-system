@@ -1,4 +1,4 @@
-﻿services:
+services:
   - type: web
     name: secureauth-api
     runtime: python
@@ -26,6 +26,8 @@
         sync: false
       - key: SMTP_PASSWORD
         sync: false
+      - key: SMTP_TIMEOUT_SECONDS
+        value: 10
       - key: ADMIN_USERNAME
         sync: false
       - key: ADMIN_PASSWORD
@@ -63,6 +65,8 @@
       - type: rewrite
         source: /*
         destination: /index.html
+
+
 
 
 

@@ -22,6 +22,7 @@ class Settings:
     SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
     SMTP_EMAIL = os.getenv("SMTP_EMAIL", "")
     SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
+    SMTP_TIMEOUT_SECONDS = int(os.getenv("SMTP_TIMEOUT_SECONDS", "10"))
 
     EMAIL_OTP_EXPIRY_MINUTES = int(os.getenv("EMAIL_OTP_EXPIRY_MINUTES", "5"))
     MFA_TEMP_EXPIRY_MINUTES = int(os.getenv("MFA_TEMP_EXPIRY_MINUTES", "5"))
@@ -38,3 +39,4 @@ class Settings:
 
 
 settings = Settings()
+

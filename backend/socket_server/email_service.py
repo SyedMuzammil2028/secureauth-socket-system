@@ -197,10 +197,18 @@ def send_email(
         html_part = MIMEText(html_body, "html", "utf-8")
         message.attach(html_part)
 
+    if not settings.SMTP_EMAIL or not settings.SMTP_PASSWORD:
+        print("[EMAIL ERROR] SMTP_EMAIL or SMTP_PASSWORD is missing.")
+        return False
+
     try:
         context = ssl.create_default_context()
 
-        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT) as server:
+        with smtplib.SMTP(
+            settings.SMTP_HOST,
+            settings.SMTP_PORT,
+            timeout=settings.SMTP_TIMEOUT_SECONDS,
+        ) as server:
             server.starttls(context=context)
             server.login(settings.SMTP_EMAIL, settings.SMTP_PASSWORD)
             server.sendmail(settings.SMTP_EMAIL, recipient, message.as_string())

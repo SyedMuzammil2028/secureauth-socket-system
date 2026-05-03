@@ -92,6 +92,7 @@ Update these values:
 SECRET_KEY=your_long_random_secret
 SMTP_EMAIL=your_email@gmail.com
 SMTP_PASSWORD=your_gmail_app_password
+SMTP_TIMEOUT_SECONDS=10
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=YourStrongPassword@123
 ```
@@ -338,6 +339,7 @@ The frontend talks to the backend through `VITE_API_BASE_URL`.
 ```text
 SMTP_EMAIL=your_email@gmail.com
 SMTP_PASSWORD=your_gmail_app_password
+SMTP_TIMEOUT_SECONDS=10
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=YourStrongPassword@123
 ```
@@ -391,6 +393,7 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_EMAIL=your_email@gmail.com
 SMTP_PASSWORD=your_gmail_app_password
+SMTP_TIMEOUT_SECONDS=10
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=YourStrongPassword@123
 EMAIL_OTP_EXPIRY_MINUTES=5
@@ -447,3 +450,4 @@ Backend health check URL:
 ```text
 https://secureauth-api.onrender.com/health
 ```
+
