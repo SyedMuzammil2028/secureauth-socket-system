@@ -1,5 +1,24 @@
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+const LOCAL_API_BASE_URL = "http://127.0.0.1:8000";
+const RENDER_API_BASE_URL = "https://secureauth-api.onrender.com";
+
+function getApiBaseUrl() {
+  const configuredUrl = import.meta.env.VITE_API_BASE_URL;
+
+  if (configuredUrl) {
+    return configuredUrl.replace(/\/$/, "");
+  }
+
+  if (
+    typeof window !== "undefined" &&
+    window.location.hostname.endsWith(".onrender.com")
+  ) {
+    return RENDER_API_BASE_URL;
+  }
+
+  return LOCAL_API_BASE_URL;
+}
+
+const API_BASE_URL = getApiBaseUrl();
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 

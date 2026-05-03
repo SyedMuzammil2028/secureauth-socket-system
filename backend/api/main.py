@@ -13,6 +13,7 @@ def get_allowed_origins() -> list[str]:
     default_origins = [
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        "https://secureauth-frontend.onrender.com",
     ]
 
     configured = os.getenv("CORS_ORIGINS", "")
