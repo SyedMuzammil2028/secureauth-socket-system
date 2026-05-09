@@ -1,3 +1,7 @@
+# System Architecture Diagram
+
+This diagram shows the SecureAuth frontend, FastAPI backend, internal socket-auth logic, SQLite database, SMTP OTP service, MFA, sessions, audit logs, and Render deployment.
+
 ```mermaid
 flowchart TD
     U[User / Admin Browser] --> FE[React + TypeScript Frontend<br/>Vite + shadcn/ui]
